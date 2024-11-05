@@ -50,10 +50,9 @@ public class StatisticAnalyzer {
                 }
 
             }
-            System.out.println(minValue);
-            System.out.println(mapOfFrequencyVariants);
+            //System.out.println(mapOfFrequencyVariants);
         }
-        System.out.println(bestKey);
+        //System.out.println(bestKey);
         return bestKey;
     }
 

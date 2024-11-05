@@ -7,5 +7,4 @@ public class AppStart {
         FileService fileService = new FileService();
         fileService.startService();
     }
-
 }

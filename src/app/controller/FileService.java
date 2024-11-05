@@ -126,7 +126,14 @@ public class FileService {
     private void bruteForceData(Path fileNameToRead, Path fileNameToWrite) throws IOException {
         List<String> lines = Files.readAllLines(fileNameToRead, StandardCharsets.UTF_8);
         BruteForceDecoder bfDecoder = new BruteForceDecoder();
-        List<String> decryptedLines = bfDecoder.bruteForceDecoding(lines);
+        List<String> decryptedLines = null;
+        if(lines.size() < 20) {
+            decryptedLines = bfDecoder.bruteForceDecodingJunior(lines);
+
+        } else {
+          decryptedLines = bfDecoder.bruteForceDecoding(lines);
+        }
+
         try (BufferedWriter writer = Files.newBufferedWriter(fileNameToWrite)) {
             for (String line : decryptedLines) {
                 line = line.toLowerCase();
