@@ -5,6 +5,7 @@ import app.model.BruteForceDecoder;
 import app.model.Encryptor;
 import app.model.Decryptor;
 import app.constants.Messages;
+import app.model.StatisticAnalyzer;
 import app.view.AppMenu;
 
 import java.io.BufferedReader;
@@ -51,7 +52,8 @@ public class FileService {
                         System.out.println(Messages.SUCCESS + fileNameToWrite.toString());
                     }
                     case 4 -> {
-                        System.out.println("Тут должен появиться статистический анализ");
+                        statisticAnalyzeData(fileNameToRead, fileNameToWrite);
+                        System.out.println(Messages.SUCCESS + fileNameToWrite.toString());
                     }
                     default -> System.out.println(Messages.INVALID_OPTION);
                 }
@@ -132,5 +134,18 @@ public class FileService {
                 writer.newLine();
             }
         }
+    }
+    private void statisticAnalyzeData(Path fileNameToRead, Path fileNameToWrite) throws IOException {
+        List<String> lines = Files.readAllLines(fileNameToRead, StandardCharsets.UTF_8);
+        StatisticAnalyzer stat = new StatisticAnalyzer();
+        List<String> decryptedLines = stat.statisticAnalyzerDecoder(lines);
+        try (BufferedWriter writer = Files.newBufferedWriter(fileNameToWrite)) {
+            for (String line : decryptedLines) {
+                line = line.toLowerCase();
+                writer.write(line);
+                writer.newLine();
+            }
+        }
+
     }
 }

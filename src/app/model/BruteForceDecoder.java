@@ -18,16 +18,7 @@ public class BruteForceDecoder {
             mapOfMatchesByKey.put(i, matches);
         }
         Integer bestKey = getBestKey(mapOfMatchesByKey);
-        if(bestKey == 0) {
-            return lines;
-        } else {
-            List<String> bestVariant = new ArrayList<>();
-            for (String line : lines) {
-                line = line.toLowerCase();
-                bestVariant.add(Decryptor.decrypt(line, bestKey));
-            }
-            return bestVariant;
-        }
+            return StatisticAnalyzer.getTheBestResultAfterDecryption(bestKey,lines);
     }
 
     private Integer getBestKey(Map<Integer, Integer> mapOfMatchesByKey) {

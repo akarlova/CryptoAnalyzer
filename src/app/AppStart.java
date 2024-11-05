@@ -6,7 +6,6 @@ public class AppStart {
     public static void main(String[] args) {
         FileService fileService = new FileService();
         fileService.startService();
-
     }
 
 }
