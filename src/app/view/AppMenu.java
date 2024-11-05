@@ -3,6 +3,7 @@ package app.view;
 import app.controller.Validator;
 import app.constants.Messages;
 
+import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class AppMenu {
         }
     }
 
-    public ArrayList<String> getData(int option) {
+    public ArrayList<String> getData(int option) throws IOException {
 
         ArrayList<String> data = new ArrayList<>();
         switch (option) {
@@ -54,12 +55,12 @@ public class AppMenu {
         return data;
     }
 
-    private String getPathToOriginalFile() {
+    private String getPathToOriginalFile() throws IOException {
         while (true) {
             System.out.println(Messages.PLEASE_ENTER_FILE_PATH_FOR_HANDLING);
             try{
             Path originalPath = Path.of(console.nextLine());
-            while (!validator.validateObtainedData(originalPath.toString())) {
+            while (!validator.validateObtainedDataForReading(originalPath.toString())) {
                 originalPath = Path.of(console.nextLine());
             }
             return originalPath.toString();
@@ -69,21 +70,20 @@ public class AppMenu {
         }
     }
 
-    private String getPathToSave() {
+    private String getPathToSave() throws IOException {
         while (true) {
             System.out.println(Messages.PLEASE_ENTER_FILE_PATH_FOR_SAVING);
             int attempts = 3;
             try {
                 Path pathForSavingFile = Path.of(console.nextLine());
-
-                while (!validator.validateObtainedData(pathForSavingFile.toString()) && --attempts > 0) {
+                while (!validator.validateObtainedDataForWriting(pathForSavingFile.toString()) && --attempts > 0) {
                     pathForSavingFile = Path.of(console.nextLine());
                 }
-                if (attempts == 0) {
-                    pathForSavingFile = Path.of("src/app/user_files/Answer.txt");
-                    System.out.println(Messages.RESULT_WILL_BE_SAVED_TO + pathForSavingFile.toString());
-                    return (pathForSavingFile.toString());
-                }
+//                if (attempts == 0) {
+//                    pathForSavingFile = Path.of("src/app/user_files/Answer.txt");
+//                    System.out.println(Messages.RESULT_WILL_BE_SAVED_TO + pathForSavingFile.toString());
+//                    return (pathForSavingFile.toString());
+//
                 System.out.println(Messages.RESULT_WILL_BE_SAVED_TO + pathForSavingFile.toString());
                 return pathForSavingFile.toString();
             } catch (InvalidPathException e) {
